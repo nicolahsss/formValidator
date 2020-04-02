@@ -1,0 +1,21 @@
+{
+    "name": "pnhs/form-validator",
+    "description": "Validates forms and other strings",
+    "type": "library",
+    "keywords": ["form-validator", "validator", "form", "formulario", "validação"],
+    "homepage": "http://github.com/nicolahsss/form-validator",
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nícola Serafim",
+            "email": "nicola@seraf.im"
+        }
+    ],
+    "require": {},
+    "autoload": {
+	"psr-4": {"PNHS\\Validator\\": "src/"}
+    }
+}
