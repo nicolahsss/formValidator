@@ -1,14 +1,16 @@
-<phpunit backupGlobals="false"
+<phpunit
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.3/phpunit.xsd"
+	 backupGlobals="true"
          backupStaticAttributes="false"
          bootstrap="phpunit.php"
-         cacheTokens="true"
+         cacheTokens="false"
          colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false"
          verbose="false">
     <testsuites>
         <testsuite name="core">
