@@ -10,6 +10,11 @@ O Form Validator é uma biblioteca de código aberto para validação de dados r
 
 [![Pague com PagSeguro - é rápido, grátis e seguro!](https://stc.pagseguro.uol.com.br/public/img/botoes/doacoes/209x48-doar-assina.gif)](https://pag.ae/7VUx6v4sL)
 
+## Teste em sua maquina
+Clone o repositório é execute a linha abaixo dentro da pasta samples
+```
+php -s localhost:8000
+```
 ## Instalação
 ### Composer
 Se você já conhece o **Composer** (o que é extremamente recomendado), simplesmente abra o terminal, prompt ou powershell na pasta de seu projeto e digite:
@@ -17,8 +22,6 @@ Se você já conhece o **Composer** (o que é extremamente recomendado), simples
 composer require pnhs/form-validator:"dev-master"
 ```
 
-## Teste
-Execute php -s localhost:8000
 ## Contribuição
 
 Toda contribuição é bem vinda. Se você deseja incluir novas regras, fique à vontade para explorar o código, veja como é bastante simples integrar qualquer regra à biblioteca.
