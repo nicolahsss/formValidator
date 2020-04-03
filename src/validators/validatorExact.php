@@ -31,9 +31,9 @@
 ##                                          INICIO CODIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace Validator\validators;
+namespace PNHS\Validator\validators;
 
-use Validator\ValidatorInterface;
+use PNHS\Validator\ValidatorInterface;
 
 /**
  * Description of modelMin
