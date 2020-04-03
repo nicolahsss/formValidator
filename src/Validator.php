@@ -67,7 +67,7 @@ class Validator {
             $result = $model->execute();
             
             if ($result === false) {
-                $this->setError($name . ' ' . $model->error());
+                $this->setError($name, $name . ' ' . $model->error());
                 return null;
             }
             
@@ -79,12 +79,12 @@ class Validator {
         return $this->error;
     }
     
-    private function setError($error) {
+    private function setError($name, $error) {
         if (!is_array($this->error)) {
             $this->error = array();
         }
         
-        array_push($this->error, $error);
+        $this->error[$name] = $error;
     }
 
 }
