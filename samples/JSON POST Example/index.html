@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON POST Example</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        template: `
+          <div id="container">
+            Username: <input type="text" name="username" v-model="data.username" /> {{error.username}}<br />
+            Password: <input type="password" name="password" v-model="data.password" /> {{error.password}}<br />
+            <br /><input type="submit" v-on:click="save" value="Cadastrar" /> {{info}}
+          </div>
+        `,
+        data() {
+          return {
+            error: {
+              username: "",
+              password: ""
+            },
+            data: {
+              username: "",
+              password: ""
+            },
+            info: ""
+          };
+        },
+        methods: {
+          save() {
+            console.log(this.username);
+            axios
+              .post("JSON%20POST%20Example/server.php", this.data)
+              .then(response => {
+                let data = response.data;
+                if (data.status === "ok") {
+                  this.info = "Tudo ok, não houve erros";
+                  this.error = { username: "", password: "" };
+                } else {
+                  this.info = "";
+                  this.error = data.errors;
+                }
+              });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
