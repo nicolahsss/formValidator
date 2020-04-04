@@ -16,7 +16,12 @@ $username = $validator->rules('username', 'required|min:3|max:10');
 $password = $validator->rules('password', 'required|min:8');
 
 //Se houver erros, retorna json com os erros, caso esteja tudo retorna null
-$errors = $validator->errors();
+$errors_ = $validator->errors();
+$errors = [];
+
+foreach( $errors_ as $error) {
+    $errors[$error['parameter']] = $error['error'];
+}
 
 if (is_null($errors))
   die(json_encode([

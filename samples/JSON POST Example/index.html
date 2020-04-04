@@ -23,13 +23,13 @@
           return {
             error: {
               username: "",
-              password: ""
+              password: "",
             },
             data: {
               username: "",
-              password: ""
+              password: "",
             },
-            info: ""
+            info: "",
           };
         },
         methods: {
@@ -37,8 +37,9 @@
             console.log(this.username);
             axios
               .post("JSON%20POST%20Example/server.php", this.data)
-              .then(response => {
+              .then((response) => {
                 let data = response.data;
+                console.log(data);
                 if (data.status === "ok") {
                   this.info = "Tudo ok, não houve erros";
                   this.error = { username: "", password: "" };
@@ -47,8 +48,8 @@
                   this.error = data.errors;
                 }
               });
-          }
-        }
+          },
+        },
       });
     </script>
   </body>

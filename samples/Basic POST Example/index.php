@@ -13,14 +13,19 @@ $username = $validator->rules('username', 'required|min:3|max:10');
 $password = $validator->rules('password', 'required|min:8');
 
 //Se houver erros, retorna json com os erros, caso esteja tudo retorna null
-$errors = $validator->errors();
+$errors_ = $validator->errors();
+$errors = [];
+
+foreach( $errors_ as $error) {
+    $errors[$error['parameter']] = $error['error'];
+}
 
 ?>
 <form method="post">
-    Username: <input type="text" name="username" value="<?=$username;?>" />
+    Username: <input type="text" name="username" />
     <?=(isset($_POST['username'])?$errors['username']:'');?><br />
 
-    Password: <input type="password" name="password" value="<?=$password;?>" />
+    Password: <input type="password" name="password" />
     <?=(isset($_POST['username'])?$errors['password']:'');?><br />
 
     <br /><input type="submit" value="Cadastrar" />
