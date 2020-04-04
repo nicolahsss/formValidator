@@ -51,33 +51,113 @@ Na pasta **samples** possui alguns exemplos de uso.
 ## Regras suportados
 
 Atualmente o PNHS Form Validator funciona com as seguintes regras:
+As regras que estão <strike>riscados</strike> são as que ainda não foram implementadas
 
 <table>
-    <tr>
-        <th>Regra</th>
-        <th></th>
-        <th>Code</th>
-    </tr>
-    <tr>
-        <td>required</td>
-        <td>Dado obrigatório</td>
-        <td>3001: * is required</th>
-    </tr>
-    <tr>
-        <td>min:x</td>
-        <td>Quantidade minima de caracteres</td>
-        <td>3002: * must contain at least 8 characters</td>
-    </tr>
-    <tr>
-        <td>max:x</td>
-        <td>Quantidade maxima de caracteres</td>
-        <td>3003: * must contain a maximum 60 characters</td>
-    </tr>
-    <tr>
-        <td>exact</td>
-        <td>Quantidade exata de caracteres</td>
-        <td>3004: * must contain exactly 60 characters</td>
-    </tr>
+  <tr>
+    <th>Regra</th>
+    <th>Descrição</th>
+    <th>Código de erro</th>
+  </tr>
+  <tr>
+    <td><b>required</b></td>
+    <td>Dado obrigatório</td>
+    <td><b>3001</b> * is required</td>
+  </tr>
+  <tr>
+    <td><b>min:x</b></td>
+    <td>Quantidade minima de caracteres</td>
+    <td><b>3002</b> * must contain at least * characters</td>
+  </tr>
+  <tr>
+    <td colspan="3">
+        Altere <b>x</b> pela quantidade minima de caracteres desejado
+    </td>
+  </tr>
+  <tr>
+    <td><b>max:x</b></td>
+    <td>Quantidade maxima de caracteres</td>
+    <td><b>3003</b> must contain a maximum * characters</td>
+  </tr>
+  <tr>
+    <td colspan="3">
+        Altere <b>x</b> pela quantidade maxima de caracteres desejado
+    </td>
+  </tr>
+  <tr>
+    <td><b>exact</b></td>
+    <td>Quantidade exata de caracteres</td>
+    <td><b>3004</b> must contain exactly * characters</td>
+  </tr>
+  <tr>
+    <td><b>email</b></td>
+    <td>Validar Email</td>
+    <td><b>3005</b> is not valid</td>
+  </tr>
+  <tr>
+    <td><b>array</b></td>
+    <td>Validar Array</td>
+    <td><b>3006</b> is not valid</td>
+  </tr>
+  <tr>
+    <td rowspan="9"><b>password:x</b></td>
+    <td rowspan="9">Validar Email</td>
+    <td>
+      <strike>3007 the password cannot contain repeated characters</strike>
+    </td>
+  </tr>
+  <tr>
+    <td><strike>3008 you cannot use this password</strike></td>
+  </tr>
+  <tr>
+    <td><b>3009</b> must contain uppercase characters</td>
+  </tr>
+  <tr>
+    <td><b>3010</b> must contain lowercase characters</td>
+  </tr>
+  <tr>
+    <td><b>3011</b> must contain uppercase characters and numbers</td>
+  </tr>
+  <tr>
+    <td><b>3012</b> must contain numbers</td>
+  </tr>
+  <tr>
+    <td><strike>3013 * must contain special characters</strike></td>
+  </tr>
+  <tr>
+    <td><strike>3014 * must contain special characters and numbers</strike></td>
+  </tr>
+  <tr>
+    <td><strike>3015 * must contain special characters and uppercase characters</strike></td>
+  </tr>
+  <tr>
+    <td colspan="3">
+        Altere <b>x</b> por umas destas opçoes<br />
+        <strike>0 para verificação basica 3007 e 3008</strike><br />
+        <b>1</b> para exigir letras maisculas<br />
+        <b>2</b> para exigir letras maisculas e numeros<br />
+        <strike>3 para exigir letras maisculas, numeros e caracteres especiais</strike>
+    </td>
+  </tr>
+  <tr>
+    <td><b>name</b></td>
+    <td>Validar Nome</td>
+    <td><strike>3016 is not valid</strike></td>
+  </tr>
+  <tr>
+    <td><b>username:x</b></td>
+    <td>Validar Nome de usuário</td>
+    <td><strike>3017 is not valid</strike></td>
+  </tr>
+  <tr>
+    <td colspan="3">
+        Altere <b>x</b> por umas destas opçoes<br />
+        <strike>0 para permitir apenas letras minusculas</strike><br />
+        <strike>1 para permitir apenas anteriores e numeros</strike><br />
+        <strike>2 para permitir apenas anteriores e underline</strike><br />
+        <strike>3 para permitir apenas anteriores e letras maisculas</strike><br />
+    </td>
+  </tr>
 </table>
 
 ## Contribuição
