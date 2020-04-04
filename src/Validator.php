@@ -42,49 +42,56 @@ class Validator {
 
     private $error;
     private $data;
-    
-    function __construct(array $data) {
+
+    function __construct($data) {
         $this->data = $data;
     }
 
     public function rules(string $name, string $validators) {
-        
-        $data = trim(filter_var($this->data[$name]??null));
+
+        if (is_array($this->data)) {
+            $data = trim(filter_var($this->data[$name] ?? null));
+        }
+        else {
+            $data = trim(filter_var($this->data ?? null));
+        }
         return $this->validators($name, $data, $validators);
     }
-    
+
     private function validators($name, $data, string $validators) {
         $validators_explode = \explode('|', $validators);
         foreach ($validators_explode as $value) {
             $value_explode = \explode(':', $value);
             $validator = (string) $value_explode[0];
-            $option = ($value_explode[1]??'');
+            $option = ($value_explode[1] ?? '');
 
             $model = ValidatorFactory::build($validator);
             $model->setValue($data);
             $model->setOption($option);
-            
+
             $result = $model->execute();
-            
+
             if ($result === false) {
                 $this->setError($name, $name . ' ' . $model->error());
                 return null;
             }
-            
         }
         return $result;
     }
-    
+
     public function errors() {
         return $this->error;
     }
-    
+
     private function setError($name, $error) {
         if (!is_array($this->error)) {
             $this->error = array();
         }
-        
-        $this->error[$name] = $error;
+
+        array_push($this->error, [
+            'parameter' => $name,
+            'error' => $error
+        ]);
     }
 
 }
