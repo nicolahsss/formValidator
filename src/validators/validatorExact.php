@@ -45,6 +45,7 @@ class validatorExact implements validatorInterface {
     private $value;
     private $option;
     private $error = null;
+    private $code = null;
 
     public function setValue($value): void {
         $this->value = $value;
@@ -57,6 +58,7 @@ class validatorExact implements validatorInterface {
     public function execute() {
         if ((!\is_null($this->value)) && (\strlen($this->value) != $this->option)) {
             $this->error = "must contain exactly {$this->option} characters";
+            $this->code = 3004;
             return false;
         }
         return $this->value;
@@ -64,6 +66,10 @@ class validatorExact implements validatorInterface {
 
     public function error() {
         return $this->error;
+    }
+
+    public function code() {
+        return $this->code;
     }
 
 }

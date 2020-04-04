@@ -44,6 +44,7 @@ class validatorRequired implements validatorInterface {
     private $value;
     private $option;
     private $error = null;
+    private $code = null;
     
     public function setValue($value): void {
         $this->value = $value;
@@ -56,6 +57,7 @@ class validatorRequired implements validatorInterface {
     public function execute() {
         if ((\is_null($this->value)) || (!isset($this->value)) || (empty($this->value))) {
             $this->error = "is required";
+            $this->code = 3001;
             return false;
         }
         return $this->value;
@@ -64,4 +66,9 @@ class validatorRequired implements validatorInterface {
     public function error() {
         return $this->error;
     }
+
+    public function code() {
+        return $this->code;
+    }
+
 }

@@ -50,10 +50,10 @@ class Validator {
     public function rules(string $name, string $validators) {
 
         if (is_array($this->data)) {
-            $data = trim(filter_var($this->data[$name] ?? null));
+            $data = ($this->data[$name] ?? null);
         }
         else {
-            $data = trim(filter_var($this->data ?? null));
+            $data = ($this->data ?? null);
         }
         return $this->validators($name, $data, $validators);
     }
@@ -72,7 +72,7 @@ class Validator {
             $result = $model->execute();
 
             if ($result === false) {
-                $this->setError($name, $name . ' ' . $model->error());
+                $this->setError($name, $name . ' ' . $model->error(), $model->code());
                 return null;
             }
         }
@@ -83,14 +83,15 @@ class Validator {
         return $this->error;
     }
 
-    private function setError($name, $error) {
+    private function setError($name, $error, $code) {
         if (!is_array($this->error)) {
             $this->error = array();
         }
 
         array_push($this->error, [
             'parameter' => $name,
-            'error' => $error
+            'error' => $error,
+            'code' => $code
         ]);
     }
 
