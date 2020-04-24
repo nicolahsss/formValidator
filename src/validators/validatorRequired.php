@@ -40,35 +40,44 @@ use PNHS\Validator\ValidatorInterface;
  *
  * @author nicolahsss
  */
-class validatorRequired implements validatorInterface {
+class validatorRequired implements validatorInterface
+{
     private $value;
     private $option;
     private $error = null;
     private $code = null;
-    
-    public function setValue($value): void {
+
+    public function setValue($value): void
+    {
         $this->value = $value;
     }
-    
-    public function setOption(string $option): void {
+
+    public function setOption(string $option): void
+    {
         $this->option = $option;
     }
-    
-    public function execute() {
+
+    public function setCode(int $code): void
+    {
+        $this->code = $code;
+    }
+
+    public function execute()
+    {
         if ((\is_null($this->value)) || (!isset($this->value)) || (empty($this->value))) {
             $this->error = "is required";
-            $this->code = 3001;
             return false;
         }
         return $this->value;
     }
-    
-    public function error() {
+
+    public function error()
+    {
         return $this->error;
     }
 
-    public function code() {
+    public function code()
+    {
         return $this->code;
     }
-
 }

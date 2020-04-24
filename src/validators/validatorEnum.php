@@ -40,7 +40,7 @@ use PNHS\Validator\ValidatorInterface;
  *
  * @author nicolahsss
  */
-class validatorName implements validatorInterface
+class validatorEnum implements validatorInterface
 {
     private $value;
     private $option;
@@ -66,6 +66,9 @@ class validatorName implements validatorInterface
     {
         if (false) {
             //Implementar
+            //1 CPF
+            //2 CNPJ
+            //3 AMBOS
         }
         return $this->value;
     }

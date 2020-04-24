@@ -40,36 +40,45 @@ use PNHS\Validator\ValidatorInterface;
  *
  * @author nicolahsss
  */
-class validatorMin implements validatorInterface {
+class validatorMin implements validatorInterface
+{
 
     private $value;
     private $option;
     private $error = null;
     private $code = null;
 
-    public function setValue($value): void {
+    public function setValue($value): void
+    {
         $this->value = $value;
     }
 
-    public function setOption(string $option): void {
+    public function setOption(string $option): void
+    {
         $this->option = $option;
     }
 
-    public function execute() {
+    public function setCode(int $code): void
+    {
+        $this->code = $code;
+    }
+
+    public function execute()
+    {
         if ((!\is_null($this->value)) && (\strlen($this->value) < $this->option)) {
             $this->error = "must contain at least {$this->option} characters";
-            $this->code = 3002;
             return false;
         }
         return $this->value;
     }
 
-    public function error() {
+    public function error()
+    {
         return $this->error;
     }
 
-    public function code() {
+    public function code()
+    {
         return $this->code;
     }
-
 }

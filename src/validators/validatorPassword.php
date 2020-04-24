@@ -40,41 +40,51 @@ use PNHS\Validator\ValidatorInterface;
  *
  * @author nicolahsss
  */
-class validatorPassword implements validatorInterface {
+class validatorPassword implements validatorInterface
+{
     private $value;
     private $option;
     private $error = null;
     private $code = null;
-    
-    public function setValue($value): void {
+
+    public function setValue($value): void
+    {
         $this->value = $value;
     }
-    
-    public function setOption(string $option): void {
+
+    public function setOption(string $option): void
+    {
         $this->option = $option;
     }
-    
-    public function execute() {
+
+    public function setCode(int $code): void
+    {
+        $this->code = $code;
+    }
+
+    public function execute()
+    {
         if (($this->option == 1) && (!$this->letter())) {
             return $this->letter(true);
         } else
         if (($this->option == 2)) {
-            if ((!$this->letter())&&(!$this->number())) {
+            if ((!$this->letter()) && (!$this->number())) {
                 $this->error = "must contain uppercase characters and numbers";
                 $this->code = 3010;
                 return false;
             }
-            
+
             if (!$this->letter())
                 return $this->letter(true);
-            
+
             if (!$this->number())
                 return $this->number(true);
         }
         return $this->value;
     }
-    
-    private function letter($error = false) {
+
+    private function letter($error = false)
+    {
         if ($error) {
             $this->error = "must contain uppercase characters";
             $this->code = 3009;
@@ -82,8 +92,9 @@ class validatorPassword implements validatorInterface {
         }
         return (preg_match('/\p{Lu}/u', $this->value));
     }
-    
-    private function number($error = false) {
+
+    private function number($error = false)
+    {
         if ($error) {
             $this->error = "must contain numbers";
             $this->code = 3011;
@@ -92,13 +103,14 @@ class validatorPassword implements validatorInterface {
         $filter = filter_var($this->value, FILTER_SANITIZE_NUMBER_INT);
         return is_numeric($filter);
     }
-    
-    public function error() {
+
+    public function error()
+    {
         return $this->error;
     }
 
-    public function code() {
+    public function code()
+    {
         return $this->code;
     }
-
 }

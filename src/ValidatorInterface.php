@@ -37,9 +37,11 @@ namespace PNHS\Validator;
  *
  * @author nicolahsss
  */
-interface ValidatorInterface {
-    public function setValue(string $value);
-    public function setOption(string $option);
+interface ValidatorInterface
+{
+    public function setValue(string $value): void;
+    public function setOption(string $option): void;
+    public function setCode(int $code): void;
     public function execute();
     public function error();
 }

@@ -38,36 +38,43 @@ namespace PNHS\Validator;
  *
  * @author nicolahsss
  */
-class Validator {
+class Validator
+{
 
     private $error;
     private $data;
 
-    function __construct($data) {
+    function __construct($data)
+    {
         $this->data = $data;
     }
 
-    public function rules(string $name, string $validators) {
+    public function rules(string $name, string $validators)
+    {
 
         if (is_array($this->data)) {
             $data = ($this->data[$name] ?? null);
-        }
-        else {
+        } else {
             $data = ($this->data ?? null);
         }
         return $this->validators($name, $data, $validators);
     }
 
-    private function validators($name, $data, string $validators) {
+    private function validators($name, $data, string $validators)
+    {
         $validators_explode = \explode('|', $validators);
         foreach ($validators_explode as $value) {
-            $value_explode = \explode(':', $value);
-            $validator = (string) $value_explode[0];
-            $option = ($value_explode[1] ?? '');
+
+            $value_hash = \explode('#', $value);
+            $value_option = \explode(':', $value_hash[0]);
+            $validator = (string) $value_option[0];
+            $option = ($value_option[1] ?? '');
+            $code = ($value_hash[1] ?? '');
 
             $model = ValidatorFactory::build($validator);
             $model->setValue($data);
             $model->setOption($option);
+            $model->setCode((int) $code);
 
             $result = $model->execute();
 
@@ -79,11 +86,13 @@ class Validator {
         return $result;
     }
 
-    public function errors() {
+    public function errors()
+    {
         return $this->error;
     }
 
-    private function setError($name, $error, $code) {
+    private function setError($name, $error, $code)
+    {
         if (!is_array($this->error)) {
             $this->error = array();
         }
@@ -94,5 +103,4 @@ class Validator {
             'code' => $code
         ]);
     }
-
 }

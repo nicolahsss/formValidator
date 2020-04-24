@@ -51,7 +51,13 @@ Na pasta **samples** possui alguns exemplos de uso.
 ## Regras suportados
 
 Atualmente o PNHS Form Validator funciona com as seguintes regras:
-As regras que estão <strike>riscados</strike> são as que ainda não foram implementadas
+As regras que estão <strike>riscados</strike> são as que ainda não foram implementadas.
+Você pode usar o # (hashtag) após a regra para informar o codigo de erro desejado.
+
+```
+$validator->rules('username', 'required#2012|min:3#2045|max:10');
+//Neste exemplo, caso o valor não seja informado será retornado o codigo de erro 2012 e caso a quantidade de caracteres seja menor que 3 caracteres será retornado o erro 2045.
+```
 
 <table>
   <tr>
