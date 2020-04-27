@@ -64,7 +64,7 @@ class validatorEmail implements validatorInterface
 
     public function execute()
     {
-        if (isset($this->value) && !filter_var($this->value, FILTER_VALIDATE_EMAIL)) {
+        if (!empty($this->value) && filter_var($this->value, FILTER_VALIDATE_EMAIL)) {
             $this->error = "is not valid";
             return false;
         }
