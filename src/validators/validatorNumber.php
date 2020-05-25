@@ -40,7 +40,7 @@ use PNHS\Validator\ValidatorInterface;
  *
  * @author nicolahsss
  */
-class validatorEmail implements validatorInterface
+class validatorNumber implements validatorInterface
 {
     private $value;
     private $option;
@@ -64,11 +64,23 @@ class validatorEmail implements validatorInterface
 
     public function execute()
     {
-        if (!empty($this->value) && !filter_var($this->value, FILTER_VALIDATE_EMAIL)) {
-            $this->error = "is not valid";
+        // ""
+        // Nao = true
+        // Nao = False
+        // Nao = True
+        //# A-Z
+        // Nao = true
+        // Sim = true
+        // Nao = true
+        //# 0-9
+        // Nao = true
+        // Sim = true
+        // Sim = false
+        if ((!is_null($this->value)) && ($this->value !== "") && (!is_numeric($this->value))) {
+            $this->error = "must contain only numbers";
             return false;
         }
-        return filter_var($this->value, FILTER_SANITIZE_EMAIL);
+        return $this->value;
     }
 
     public function error()

@@ -40,7 +40,7 @@ use PNHS\Validator\ValidatorInterface;
  *
  * @author nicolahsss
  */
-class validatorEmail implements validatorInterface
+class validatorPhone implements validatorInterface
 {
     private $value;
     private $option;
@@ -64,11 +64,28 @@ class validatorEmail implements validatorInterface
 
     public function execute()
     {
-        if (!empty($this->value) && !filter_var($this->value, FILTER_VALIDATE_EMAIL)) {
-            $this->error = "is not valid";
+        if (!empty($this->option) || !empty($this->value))
+            if (method_exists($this, $this->option)) {
+                return (call_user_func(array($this, $this->option)));
+            } else {
+                $this->error = "must be a valid country phone";
+                return false;
+            }
+    }
+
+    private function br()
+    {
+        if ((is_null($this->value)) || (empty($this->value)))
+            return $this->value;
+        if (!(
+            (!is_null($this->value)) &&
+            (is_numeric($this->value)) &&
+            (strlen($this->value) >= 10) &&
+            (strlen($this->value) <= 11))) {
+            $this->error = "must be a valid Brazilian phone";
             return false;
         }
-        return filter_var($this->value, FILTER_SANITIZE_EMAIL);
+        return $this->value;
     }
 
     public function error()
