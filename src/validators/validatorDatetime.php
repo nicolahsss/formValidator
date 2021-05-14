@@ -40,7 +40,7 @@ use PNHS\Validator\ValidatorInterface;
  *
  * @author nicolahsss
  */
-class validatorEmail implements validatorInterface
+class validatorDatetime implements validatorInterface
 {
     private $value;
     private $option;
@@ -64,11 +64,13 @@ class validatorEmail implements validatorInterface
 
     public function execute()
     {
-        if (!empty($this->value) && !filter_var($this->value, FILTER_VALIDATE_EMAIL)) {
-            $this->error = "is not valid";
-            return false;
+        if (false) {
+            //Implementar
+            //1 CPF
+            //2 CNPJ
+            //3 AMBOS
         }
-        return filter_var($this->value, FILTER_SANITIZE_EMAIL);
+        return $this->value;
     }
 
     public function error()

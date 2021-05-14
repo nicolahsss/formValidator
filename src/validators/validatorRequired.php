@@ -64,7 +64,7 @@ class validatorRequired implements validatorInterface
 
     public function execute()
     {
-        if ((\is_null($this->value)) || (!isset($this->value)) || (empty($this->value))) {
+        if ((\is_null($this->value)) || (!isset($this->value))) {
             $this->error = "is required";
             return false;
         }
