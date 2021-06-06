@@ -57,8 +57,8 @@ $form = [
 $validator = new Validator($form);
 
 /*
- * required: Make field mandatory
- * #: Desired error code (Must be integer)
+ * email: Check and sanitize email
+ * # Desired error code (Must be integer)
  */
 $input1 = $validator->rules('input1', 'email');
 $input2 = $validator->rules('input2', 'email');

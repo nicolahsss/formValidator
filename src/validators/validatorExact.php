@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 ###############################################################################################################
 ###############################################################################################################
 ##                                                                                                           ##
@@ -31,14 +33,14 @@
 ##                                          INICIO CODIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace PNHS\Validator\validators;
+namespace Serafim\FormValidator\validators;
 
-use PNHS\Validator\ValidatorInterface;
+use DateTime;
+use Serafim\FormValidator\ValidatorInterface;
 
 /**
- * Description of modelMin
  *
- * @author nicolahsss
+ * @author Nícola Serafim <nicola@seraf.im>
  */
 class validatorExact implements validatorInterface
 {
@@ -50,7 +52,7 @@ class validatorExact implements validatorInterface
 
     public function setValue($value): void
     {
-        $this->value = $value;
+        $this->value = (string) $value;
     }
 
     public function setOption(string $option): void

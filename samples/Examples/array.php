@@ -57,8 +57,8 @@ $form = [
 $validator = new Validator($form);
 
 /*
- * required: Make field mandatory
- * #: Desired error code (Must be integer)
+ * array: Must be an array if sent
+ * # Desired error code (Must be integer)
  */
 $input1 = $validator->rules('input1', 'array');
 $input2 = $validator->rules('input2', 'array');

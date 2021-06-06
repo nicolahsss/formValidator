@@ -57,14 +57,16 @@ $form = [
 $validator = new Validator($form);
 
 /*
- * required: Make field mandatory
- * #: Desired error code (Must be integer)
+ * datetime: Must be a datetime if sent
+ * string: Must be a string if sent
+ * # Desired error code (Must be integer)
+ * : Send if date format other than Y-m-d H:i:s
  */
-$input1 = $validator->rules('input1', 'no_empty|string|datetime');
-$input2 = $validator->rules('input2', 'no_empty|string|datetime:d-m-Y H-i-s');
-$input3 = $validator->rules('input3', 'no_empty|string|datetime:d/m/Y H:i:s#124');
-$input4 = $validator->rules('input4', 'no_empty#22|string|datetime#123');
-$input5 = $validator->rules('input5', 'no_empty|string|datetime');
+$input1 = $validator->rules('input1', 'string|datetime');
+$input2 = $validator->rules('input2', 'string|datetime:d-m-Y H-i-s');
+$input3 = $validator->rules('input3', 'string|datetime:d/m/Y H:i:s#124');
+$input4 = $validator->rules('input4', 'string|datetime#123');
+$input5 = $validator->rules('input5', 'string|datetime');
 
 // If there are errors, it returns json with the errors, if everything returns null
 $errors = $validator->errors();

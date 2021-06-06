@@ -57,8 +57,9 @@ $form = [
 $validator = new Validator($form);
 
 /*
- * required: Make field mandatory
- * #: Desired error code (Must be integer)
+ * decimal: Check if it is decimal, convert to string and add all zeros after point
+ * # Desired error code (Must be integer)
+ * : Inform if the number of digits after the point is different from 2
  */
 $input1 = $validator->rules('input1', 'decimal');
 $input2 = $validator->rules('input2', 'decimal:4');

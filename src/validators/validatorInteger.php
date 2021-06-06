@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 ###############################################################################################################
 ###############################################################################################################
 ##                                                                                                           ##
@@ -31,14 +33,14 @@
 ##                                          INICIO CODIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace PNHS\Validator\validators;
+namespace Serafim\FormValidator\validators;
 
-use PNHS\Validator\ValidatorInterface;
+use DateTime;
+use Serafim\FormValidator\ValidatorInterface;
 
 /**
- * Description of modelMin
  *
- * @author nicolahsss
+ * @author Nícola Serafim <nicola@seraf.im>
  */
 class validatorInteger implements validatorInterface
 {
@@ -64,11 +66,9 @@ class validatorInteger implements validatorInterface
 
     public function execute()
     {
-        if (false) {
-            //Implementar
-            //1 CPF
-            //2 CNPJ
-            //3 AMBOS
+        if (!empty($this->value) && !is_int($this->value)) {
+            $this->error = "is not valid";
+            return false;
         }
         return $this->value;
     }

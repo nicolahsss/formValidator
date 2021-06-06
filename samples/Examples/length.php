@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 ###############################################################################################################
 ###############################################################################################################
 ##                                                                                                           ##
@@ -31,55 +33,54 @@
 ##                                          INICIO CODIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace PNHS\Validator\validators;
+use Serafim\FormValidator\Validator;
 
-use PNHS\Validator\ValidatorInterface;
+require '../../vendor/autoload.php';
 
-/**
- * Description of modelMin
- *
- * @author nicolahsss
+$form = [
+  // Input 1
+  "input1" => 1234567890,
+
+  // Input 2
+  "input2" => "uma string qualquer",
+
+  // Input 3
+  "input3" => 4564.56,
+
+  // Input 4 - Not sent
+  //"input4" => "",
+
+  // Input 5
+  "input5" => "invalid",
+];
+
+$validator = new Validator($form);
+
+/*
+ * min_len: Confirm the minimum number of characters desired
+ * max_len: Confirm the maximum number of characters desired
+ * # Desired error code (Must be integer)
+ * : Inform the desired amount
  */
-class validatorEnum implements validatorInterface
-{
-    private $value;
-    private $option;
-    private $error = null;
-    private $code = null;
+$input1 = $validator->rules('input1', 'min_len:10');
+$input2 = $validator->rules('input2', 'max_len:19');
+$input3 = $validator->rules('input3', 'min_len:7|max_len:10');
+$input4 = $validator->rules('input4', 'min_len:12|max_len:26');
+$input5 = $validator->rules('input5', 'min_len:12|max_len:26');
 
-    public function setValue($value): void
-    {
-        $this->value = $value;
-    }
+// If there are errors, it returns json with the errors, if everything returns null
+$errors = $validator->errors();
 
-    public function setOption(string $option): void
-    {
-        $this->option = $option;
-    }
+//See the result
+echo "<pre>";
+var_dump([
+  "input1" => $input1,
+  "input2" => $input2,
+  "input3" => $input3,
+  "input4" => $input4,
+  "input5" => $input5,
 
-    public function setCode(int $code): void
-    {
-        $this->code = $code;
-    }
-
-    public function execute()
-    {
-        if (false) {
-            //Implementar
-            //1 CPF
-            //2 CNPJ
-            //3 AMBOS
-        }
-        return $this->value;
-    }
-
-    public function error()
-    {
-        return $this->error;
-    }
-
-    public function code()
-    {
-        return $this->code;
-    }
-}
+  // Erro
+  "result" => $errors
+]);
+echo "</pre>";

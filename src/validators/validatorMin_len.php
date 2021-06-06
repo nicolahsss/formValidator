@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 ###############################################################################################################
 ###############################################################################################################
 ##                                                                                                           ##
@@ -31,17 +33,17 @@
 ##                                          INICIO CODIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace PNHS\Validator\validators;
+namespace Serafim\FormValidator\validators;
 
-use PNHS\Validator\ValidatorInterface;
+use Serafim\FormValidator\ValidatorInterface;
 
 /**
- * Description of modelMin
  *
- * @author nicolahsss
+ * @author Nícola Serafim <nicola@seraf.im>
  */
-class validatorDocumentBRA implements validatorInterface
+class validatorMin_len implements validatorInterface
 {
+
     private $value;
     private $option;
     private $error = null;
@@ -64,11 +66,9 @@ class validatorDocumentBRA implements validatorInterface
 
     public function execute()
     {
-        if (false) {
-            //Implementar
-            //1 CPF
-            //2 CNPJ
-            //3 AMBOS
+        if ((!empty($this->value)) && (strlen($this->value) < $this->option)) {
+            $this->error = "must contain at least {$this->option} characters";
+            return false;
         }
         return $this->value;
     }

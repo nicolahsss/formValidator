@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 ###############################################################################################################
 ###############################################################################################################
 ##                                                                                                           ##
@@ -31,54 +33,53 @@
 ##                                          INICIO CODIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace PNHS\Validator\validators;
+use Serafim\FormValidator\Validator;
 
-use PNHS\Validator\ValidatorInterface;
+require '../../vendor/autoload.php';
 
-/**
- * Description of modelMin
- *
- * @author nicolahsss
+$form = [
+  // Input 1
+  "input1" => 1234567890,
+
+  // Input 2
+  "input2" => "uma string qualquer",
+
+  // Input 3
+  "input3" => 4564.56,
+
+  // Input 4 - Not sent
+  //"input4" => "",
+
+  // Input 5
+  "input5" => "invalid",
+];
+
+$validator = new Validator($form);
+
+/*
+ * exact: Confirm the number of characters
+ * # Desired error code (Must be integer)
+ * : Inform the desired amount
  */
-class validatorMax implements validatorInterface
-{
+$input1 = $validator->rules('input1', 'exact:10');
+$input2 = $validator->rules('input2', 'exact:19');
+$input3 = $validator->rules('input3', 'exact:7');
+$input4 = $validator->rules('input4', 'exact:12');
+$input5 = $validator->rules('input5', 'exact:12');
 
-    private $value;
-    private $option;
-    private $error = null;
-    private $code = null;
+// If there are errors, it returns json with the errors, if everything returns null
+$errors = $validator->errors();
 
-    public function setValue($value): void
-    {
-        $this->value = $value;
-    }
+//See the result
+echo "<pre>";
+var_dump([
+  "input1" => $input1,
+  "input2" => $input2,
+  "input3" => $input3,
+  "input4" => $input4,
+  "input5" => $input5,
 
-    public function setOption(string $option): void
-    {
-        $this->option = $option;
-    }
-
-    public function setCode(int $code): void
-    {
-        $this->code = $code;
-    }
-
-    public function execute()
-    {
-        if ((!\is_null($this->value)) && (\strlen($this->value) > $this->option)) {
-            $this->error = "must contain a maximum {$this->option} characters";
-            return false;
-        }
-        return $this->value;
-    }
-
-    public function error()
-    {
-        return $this->error;
-    }
-
-    public function code()
-    {
-        return $this->code;
-    }
-}
+  // Erro
+  "result" => $errors
+]);
+echo "</pre>";
