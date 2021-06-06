@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 ###############################################################################################################
 ###############################################################################################################
 ##                                                                                                           ##
@@ -31,20 +33,24 @@
 ##                                          INICIO CODIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace PNHS\Validator;
+namespace Serafim\FormValidator;
+
+use Exception;
 
 /**
- * Description of controllerFactory
  *
  * @author nicolahsss
  */
-class ValidatorFactory {
-    public static function build ($type) {
-        $className = '\\PNHS\Validator\validators\validator'.ucfirst($type);
-        if(class_exists($className)):
+class ValidatorFactory
+{
+    public static function build($type)
+    {
+        $className = '\\Serafim\FormValidator\validators\validator' . ucfirst($type);
+        if (class_exists($className)) :
             return new $className();
-        else:
-            throw new \Exception('Validator not found!');
+        else :
+            die($className);
+            throw new Exception("Validator {$type} not found!");
         endif;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 ###############################################################################################################
 ###############################################################################################################
 ##                                                                                                           ##
@@ -31,10 +33,9 @@
 ##                                          INICIO CODIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace PNHS\Validator;
+namespace Serafim\FormValidator;
 
 /**
- * Description of validator
  *
  * @author nicolahsss
  */
@@ -64,7 +65,6 @@ class Validator
     {
         $validators_explode = \explode('|', $validators);
         foreach ($validators_explode as $value) {
-
             $value_hash = \explode('#', $value);
             $value_option = \explode(':', $value_hash[0]);
             $validator = (string) $value_option[0];
@@ -79,19 +79,19 @@ class Validator
             $result = $model->execute();
 
             if ($result === false) {
-                $this->setError($name, $name . ' ' . $model->error(), $model->code());
+                $this->setError($name, $name . ' ' . $model->error(), $model->code(), $validator);
                 return null;
             }
         }
         return $result;
     }
 
-    public function errors()
+    public function errors(): ?array
     {
         return $this->error;
     }
 
-    private function setError($name, $error, $code)
+    private function setError($name, $error, $code, $type): void
     {
         if (!is_array($this->error)) {
             $this->error = array();
@@ -100,7 +100,8 @@ class Validator
         array_push($this->error, [
             'parameter' => $name,
             'error' => $error,
-            'code' => $code
+            'code' => $code,
+            'type' => $type
         ]);
     }
 }
