@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 ###############################################################################################################
 ###############################################################################################################
 ##                                                                                                           ##
@@ -31,19 +33,19 @@
 ##                                          INICIO CODIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace PNHS\Validator\validators;
+namespace Serafim\FormValidator\validators;
 
-use PNHS\Validator\ValidatorInterface;
+use DateTime;
+use Serafim\FormValidator\ValidatorInterface;
 
 /**
- * Description of modelMin
  *
- * @author nicolahsss
+ * @author Nícola Serafim <nicola@seraf.im>
  */
 class validatorDatetime implements validatorInterface
 {
     private $value;
-    private $option;
+    private $option = "Y-m-d H:i:s";
     private $error = null;
     private $code = null;
 
@@ -54,7 +56,8 @@ class validatorDatetime implements validatorInterface
 
     public function setOption(string $option): void
     {
-        $this->option = $option;
+        if ($option)
+            $this->option = $option;
     }
 
     public function setCode(int $code): void
@@ -64,13 +67,12 @@ class validatorDatetime implements validatorInterface
 
     public function execute()
     {
-        if (false) {
-            //Implementar
-            //1 CPF
-            //2 CNPJ
-            //3 AMBOS
-        }
-        return $this->value;
+        echo $this->option;
+        $date = DateTime::createFromFormat($this->option, $this->value);
+        if ($date && $date->format($this->option) === $this->value)
+            return $date->format("Y-m-d H:i:s");
+        $this->error = "is not date valid";
+        return false;
     }
 
     public function error()
