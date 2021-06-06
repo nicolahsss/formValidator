@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 ###############################################################################################################
 ###############################################################################################################
 ##                                                                                                           ##
@@ -28,19 +30,19 @@
 ###############################################################################################################
 ###############################################################################################################
 ###############################################################################################################
-##                                          INICIO CODIGO DE FONTE!                                          ##
+##                                          INICIO CÓDIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace PNHS\Validator\validators;
+namespace Serafim\FormValidator\validators;
 
-use PNHS\Validator\ValidatorInterface;
+use DateTime;
+use Serafim\FormValidator\ValidatorInterface;
 
 /**
- * Description of modelMin
  *
- * @author nicolahsss
+ * @author Nícola Serafim <nicola@seraf.im>
  */
-class validatorUsername implements validatorInterface
+class validatorNumeric implements validatorInterface
 {
     private $value;
     private $option;
@@ -64,32 +66,9 @@ class validatorUsername implements validatorInterface
 
     public function execute()
     {
-        if (((int) $this->option === 0) && !ctype_lower($this->value)) {
-            $this->error = "must contain only lowercase letters";
+        if (!empty($this->value) && !is_numeric($this->value)) {
+            $this->error = "is not valid";
             return false;
-        } else {
-            for ($i = 0; $i < strlen($this->value); $i++) {
-                if ((int) $this->option === 1) {
-                    if (!ctype_lower($this->value[$i]) && !ctype_digit($this->value[$i])) {
-                        $this->error = "must contain only lowercase letters and numbers";
-                        return false;
-                    }
-                }
-                if ((int) $this->option === 2) {
-                    if (!ctype_lower($this->value[$i]) && !ctype_digit($this->value[$i]) && $this->value[$i] !== "_") {
-                        if (!ctype_lower($this->value[$i]) && !ctype_digit($this->value[$i])) {
-                            $this->error = "must contain only lowercase letters, numbers and underline";
-                            return false;
-                        }
-                    }
-                }
-                if ((int) $this->option === 3) {
-                    if (!ctype_alnum($this->value[$i]) && $this->value[$i] !== "_") {
-                        $this->error = "must contain only letters, numbers and underline";
-                        return false;
-                    }
-                }
-            }
         }
         return $this->value;
     }

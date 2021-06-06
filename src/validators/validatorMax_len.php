@@ -30,7 +30,7 @@ declare(strict_types=1);
 ###############################################################################################################
 ###############################################################################################################
 ###############################################################################################################
-##                                          INICIO CODIGO DE FONTE!                                          ##
+##                                          INICIO CÓDIGO DE FONTE!                                          ##
 ###############################################################################################################
 
 namespace Serafim\FormValidator\validators;
@@ -51,7 +51,7 @@ class validatorMax_len implements validatorInterface
 
     public function setValue($value): void
     {
-        $this->value = $value;
+        $this->value = (string) $value;
     }
 
     public function setOption(string $option): void

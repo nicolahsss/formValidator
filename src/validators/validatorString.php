@@ -30,7 +30,7 @@ declare(strict_types=1);
 ###############################################################################################################
 ###############################################################################################################
 ###############################################################################################################
-##                                          INICIO CODIGO DE FONTE!                                          ##
+##                                          INICIO CÓDIGO DE FONTE!                                          ##
 ###############################################################################################################
 
 namespace Serafim\FormValidator\validators;
@@ -66,7 +66,7 @@ class validatorString implements validatorInterface
 
     public function execute()
     {
-        if (gettype($this->value) === "string")
+        if (empty($this->value) || gettype($this->value) === "string")
             return $this->value;
         $this->error = "is not valid";
         return false;
