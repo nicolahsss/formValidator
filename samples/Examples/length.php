@@ -33,7 +33,7 @@ declare(strict_types=1);
 ##                                          INICIO CÓDIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-use Serafim\FormValidator\Validator;
+use PnhsFormValidator\Validator;
 
 require '../../vendor/autoload.php';
 

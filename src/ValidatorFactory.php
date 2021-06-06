@@ -33,7 +33,7 @@ declare(strict_types=1);
 ##                                          INICIO CÓDIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace Serafim\FormValidator;
+namespace PnhsFormValidator;
 
 use Exception;
 
@@ -45,7 +45,7 @@ class ValidatorFactory
 {
     public static function build($type)
     {
-        $className = '\\Serafim\FormValidator\validators\validator' . ucfirst($type);
+        $className = '\\PnhsFormValidator\validators\validator' . ucfirst($type);
         if (class_exists($className)) :
             return new $className();
         else :

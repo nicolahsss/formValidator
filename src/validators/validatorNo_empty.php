@@ -33,9 +33,9 @@ declare(strict_types=1);
 ##                                          INICIO CÓDIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace Serafim\FormValidator\validators;
+namespace PnhsFormValidator\validators;
 
-use Serafim\FormValidator\ValidatorInterface;
+use PnhsFormValidator\ValidatorInterface;
 
 /**
  *

@@ -1,5 +1,5 @@
 {
-  "name": "serafim/form_validator",
+  "name": "pnhs/form_validator",
   "description": "Validates forms and other strings",
   "type": "library",
   "keywords": [
@@ -19,7 +19,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "Serafim\\FormValidator\\": "src/"
+      "Pnhs\\FormValidator\\": "src/"
     }
   },
   "require-dev": {
