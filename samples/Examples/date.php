@@ -33,52 +33,52 @@ declare(strict_types=1);
 ##                                          INICIO CODIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace Serafim\FormValidator\validators;
+use Serafim\FormValidator\Validator;
 
-use Serafim\FormValidator\ValidatorInterface;
+require '../../vendor/autoload.php';
 
-/**
- *
- * @author nicolahsss
+$form = [
+  // Input 1 - Sending date in year month day format
+  "input1" => "2021-06-06",
+
+  // Input 2 - Sending date in day month year format
+  "input2" => "06-06-2021",
+
+  // Input 3
+  "input3" => "06/06/2021",
+
+  // Input 4 - Not sent
+  //"input4" => "",
+
+  // Input 5 - Invalid
+  "input5" => "2021-02-31",
+];
+
+$validator = new Validator($form);
+
+/*
+ * required: Make field mandatory
+ * #: Desired error code (Must be integer)
  */
-class validatorRequired implements ValidatorInterface
-{
-    private $value;
-    private $option;
-    private $error = null;
-    private $code = null;
+$input1 = $validator->rules('input1', 'no_empty|string|date');
+$input2 = $validator->rules('input2', 'no_empty|string|date:d-m-Y');
+$input3 = $validator->rules('input3', 'no_empty|string|date:d/m/Y#124');
+$input4 = $validator->rules('input4', 'no_empty#22|string|date#123');
+$input5 = $validator->rules('input5', 'no_empty|string|date');
 
-    public function setValue($value): void
-    {
-        $this->value = $value;
-    }
+// If there are errors, it returns json with the errors, if everything returns null
+$errors = $validator->errors();
 
-    public function setOption(string $option): void
-    {
-        $this->option = $option;
-    }
+//See the result
+echo "<pre>";
+var_dump([
+  "input1" => $input1,
+  "input2" => $input2,
+  "input3" => $input3,
+  "input4" => $input4,
+  "input5" => $input5,
 
-    public function setCode(int $code): void
-    {
-        $this->code = $code;
-    }
-
-    public function execute()
-    {
-        if ((!isset($this->value)) && (gettype($this->value) !== "boolean")) {
-            $this->error = "is required";
-            return false;
-        }
-        return $this->value;
-    }
-
-    public function error()
-    {
-        return $this->error;
-    }
-
-    public function code()
-    {
-        return $this->code;
-    }
-}
+  // Erro
+  "result" => $errors
+]);
+echo "</pre>";

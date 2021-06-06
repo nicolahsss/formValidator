@@ -35,13 +35,14 @@ declare(strict_types=1);
 
 namespace Serafim\FormValidator\validators;
 
+use DateTime;
 use Serafim\FormValidator\ValidatorInterface;
 
 /**
  *
- * @author nicolahsss
+ * @author Nícola Serafim <nicola@seraf.im>
  */
-class validatorRequired implements ValidatorInterface
+class validatorString implements validatorInterface
 {
     private $value;
     private $option;
@@ -65,11 +66,10 @@ class validatorRequired implements ValidatorInterface
 
     public function execute()
     {
-        if ((!isset($this->value)) && (gettype($this->value) !== "boolean")) {
-            $this->error = "is required";
-            return false;
-        }
-        return $this->value;
+        if (gettype($this->value) === "string")
+            return $this->value;
+        $this->error = "is not valid";
+        return false;
     }
 
     public function error()

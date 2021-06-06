@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 ###############################################################################################################
 ###############################################################################################################
 ##                                                                                                           ##
@@ -31,16 +33,15 @@
 ##                                          INICIO CODIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace PNHS\Validator\validators;
+namespace Serafim\FormValidator\validators;
 
-use PNHS\Validator\ValidatorInterface;
+use Serafim\FormValidator\ValidatorInterface;
 
 /**
- * Description of modelMin
  *
- * @author nicolahsss
+ * @author Nícola Serafim <nicola@seraf.im>
  */
-class validatorArray implements validatorInterface
+class validatorArray implements ValidatorInterface
 {
     private $value;
     private $option;
@@ -64,7 +65,7 @@ class validatorArray implements validatorInterface
 
     public function execute()
     {
-        if (!is_array($this->value)) {
+        if (isset($this->value) && !is_array($this->value)) {
             $this->error = "is not valid";
             return false;
         }

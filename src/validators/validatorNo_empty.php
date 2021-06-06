@@ -39,9 +39,9 @@ use Serafim\FormValidator\ValidatorInterface;
 
 /**
  *
- * @author nicolahsss
+ * @author Nícola Serafim <nicola@seraf.im>
  */
-class validatorRequired implements ValidatorInterface
+class validatorNo_empty implements ValidatorInterface
 {
     private $value;
     private $option;
@@ -65,8 +65,8 @@ class validatorRequired implements ValidatorInterface
 
     public function execute()
     {
-        if ((!isset($this->value)) && (gettype($this->value) !== "boolean")) {
-            $this->error = "is required";
+        if ((!is_null($this->value) || isset($this->value)) && empty($this->value)) {
+            $this->error = "is empty";
             return false;
         }
         return $this->value;
