@@ -14,6 +14,10 @@ Se você já conhece o **Composer** (o que é extremamente recomendado), simples
 
 ```
 composer require pnhs/form-validator:"dev-master"
+cd form_validator
+composer install --no-dev
+cd samples
+php -S localhost:8888
 ```
 
 ## Como usar

@@ -1,32 +1,69 @@
 <?php
-use PNHS\Validator\Validator;
+
+declare(strict_types=1);
+
+###############################################################################################################
+###############################################################################################################
+##                                                                                                           ##
+##  ######################     #####            #####     #####            #####     ######################  ##
+##  ######################     #####            #####     #####            #####     ######################  ##
+##  ######################     ######           #####     #####            #####     ######################  ##
+##  ######################     #######          #####     #####            #####     ######################  ##
+##  ######################     ########         #####     #####            #####     ######################  ##
+##  #####            #####     #########        #####     #####            #####     #####                   ##
+##  #####            #####     ##########       #####     #####            #####     #####     .COM.BR       ##
+##  #####            #####     ##### #####      #####     ######################     ######################  ##
+##  #####            #####     #####  #####     #####     ######################     ######################  ##
+##  ######################     #####   #####    #####     ######################     ######################  ##
+##  ######################     #####    #####   #####     ######################     ######################  ##
+##  ######################     #####     #####  #####     ######################     ######################  ##
+##  ######################     #####      ##### #####     #####            #####                      #####  ##
+##  ######################     #####       ##########     #####            #####                      #####  ##
+##  #####                      #####        #########     #####            #####     ######################  ##
+##  #####                      #####         ########     #####            #####     ######################  ##
+##  #####                      #####          #######     #####            #####     ######################  ##
+##  #####                      #####           ######     #####            #####     ######################  ##
+##  #####                      #####            #####     #####            #####     ######################  ##
+##                                                                                                           ##
+###############################################################################################################
+##                   TODOS OS DIREITOS RESERVADOS  O SENHOR E MEU PASTOR E NADA ME FALTARÁ                   ##
+###############################################################################################################
+###############################################################################################################
+###############################################################################################################
+##                                          INICIO CÓDIGO DE FONTE!                                          ##
+###############################################################################################################
+
+use Serafim\FormValidator\Validator;
+
 require '../../vendor/autoload.php';
 
 $validator = new Validator($_POST);
 
 /*
- * required: obrigatório
- * min: quantidade mínima de caracteres
- * max: quantidade máxima de caracteres
+ * required: Make mandatory
+ * no_empty: Can not be empty
+ * min_len: Minimum number of characters
+ * max_len: Maximum number of characters
  */
-$username = $validator->rules('username', 'required|min:3|max:10');
-$password = $validator->rules('password', 'required|min:8');
+$username = $validator->rules('username', 'required|no_empty|min_len:3|max_len:10');
+$password = $validator->rules('password', 'required|no_empty|min_len:8');
 
-//Se houver erros, retorna json com os erros, caso esteja tudo retorna null
-$errors_ = $validator->errors();
+// If there are errors, it returns json with the errors, if everything returns null
+$error = $validator->errors();
 $errors = [];
 
-foreach( $errors_ as $error) {
-    $errors[$error['parameter']] = $error['error'];
+foreach ($error as $item) {
+    $errors[$item['parameter']] = $item['error'];
 }
 
 ?>
 <form method="post">
     Username: <input type="text" name="username" />
-    <?=(isset($_POST['username'])?$errors['username']:'');?><br />
+    <?= (isset($_POST['username']) ? $errors['username'] : ''); ?><br />
 
     Password: <input type="password" name="password" />
-    <?=(isset($_POST['username'])?$errors['password']:'');?><br />
+    <?= (isset($_POST['username']) ? $errors['password'] : ''); ?><br />
 
     <br /><input type="submit" value="Cadastrar" />
+    <?= (is_null($error) ? "OK" : "ERROR"); ?>
 </form>

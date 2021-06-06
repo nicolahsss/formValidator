@@ -33,76 +33,15 @@ declare(strict_types=1);
 ##                                          INICIO CÓDIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace Serafim\FormValidator;
-
-/**
- *
- * @author nicolahsss
- */
-class Validator
+function name($file)
 {
-
-    private $error;
-    private $data;
-
-    function __construct($data)
-    {
-        $this->data = $data;
-    }
-
-    public function rules(string $name, string $validators)
-    {
-
-        if (is_array($this->data)) {
-            $data = ($this->data[$name] ?? null);
-        } else {
-            $data = ($this->data ?? null);
-        }
-        return $this->validators($name, $data, $validators);
-    }
-
-    private function validators($name, $data, string $validators)
-    {
-        $validators_explode = \explode('|', $validators);
-        foreach ($validators_explode as $value) {
-            $value_hash = \explode('#', $value);
-            $value_option = \explode(':', $value_hash[0]);
-            $validator = (string) $value_option[0];
-            array_shift($value_option);
-            $option = implode(':', $value_option);
-            $code = ($value_hash[1] ?? '');
-
-            $model = ValidatorFactory::build($validator);
-            $model->setValue($data);
-            $model->setOption($option);
-            $model->setCode((int) $code);
-
-            $result = $model->execute();
-
-            if ($result === false) {
-                $this->setError($name, $name . ' ' . $model->error(), $model->code(), $validator);
-                return null;
-            }
-        }
-        return $result;
-    }
-
-    public function errors(): ?array
-    {
-        return $this->error;
-    }
-
-    private function setError($name, $error, $code, $type): void
-    {
-        if (!is_array($this->error)) {
-            $this->error = array();
-        }
-
-        array_push($this->error, [
-            'parameter' => $name,
-            'error' => $error,
-            'code' => $code,
-            'type' => $type
-        ]);
-    }
+    $name = substr($file, 0, -4);
+    return ucfirst($name);
 }
+
+$dir = dir(__DIR__);
+while ($file = $dir->read()) {
+    if (!in_array($file, ['.', 'index.php', '..', 'README.md']))
+        echo "<a href='Examples/" . $file . "'>" . name($file) . "</a><br />";
+}
+$dir->close();

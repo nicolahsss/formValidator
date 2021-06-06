@@ -33,76 +33,52 @@ declare(strict_types=1);
 ##                                          INICIO CÓDIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace Serafim\FormValidator;
+use Serafim\FormValidator\Validator;
 
-/**
- *
- * @author nicolahsss
+require '../../vendor/autoload.php';
+
+$form = [
+  // Input 1
+  "input1" => 26,
+
+  // Input 2
+  "input2" => "9.223372036854775807",
+
+  // Input 3
+  "input3" => 0b11111111,
+
+  // Input 4 - Not sent
+  //"input4" => "",
+
+  // Input 5
+  "input5" => "invalid",
+];
+
+$validator = new Validator($form);
+
+/*
+ * numeric: Confirm if they are numbers
+ * # Desired error code (Must be integer)
  */
-class Validator
-{
+$input1 = $validator->rules('input1', 'numeric');
+$input2 = $validator->rules('input2', 'numeric');
+$input3 = $validator->rules('input3', 'numeric');
+$input4 = $validator->rules('input4', 'numeric');
+$input5 = $validator->rules('input5', 'numeric');
 
-    private $error;
-    private $data;
+// If there are errors, it returns json with the errors, if everything returns null
+$errors = $validator->errors();
 
-    function __construct($data)
-    {
-        $this->data = $data;
-    }
+//See the result
+echo "<pre>";
+var_dump([
+  "input1" => $input1,
+  "input2" => $input2,
+  "input3" => $input3,
+  "input4" => $input4,
+  "input5" => $input5,
 
-    public function rules(string $name, string $validators)
-    {
-
-        if (is_array($this->data)) {
-            $data = ($this->data[$name] ?? null);
-        } else {
-            $data = ($this->data ?? null);
-        }
-        return $this->validators($name, $data, $validators);
-    }
-
-    private function validators($name, $data, string $validators)
-    {
-        $validators_explode = \explode('|', $validators);
-        foreach ($validators_explode as $value) {
-            $value_hash = \explode('#', $value);
-            $value_option = \explode(':', $value_hash[0]);
-            $validator = (string) $value_option[0];
-            array_shift($value_option);
-            $option = implode(':', $value_option);
-            $code = ($value_hash[1] ?? '');
-
-            $model = ValidatorFactory::build($validator);
-            $model->setValue($data);
-            $model->setOption($option);
-            $model->setCode((int) $code);
-
-            $result = $model->execute();
-
-            if ($result === false) {
-                $this->setError($name, $name . ' ' . $model->error(), $model->code(), $validator);
-                return null;
-            }
-        }
-        return $result;
-    }
-
-    public function errors(): ?array
-    {
-        return $this->error;
-    }
-
-    private function setError($name, $error, $code, $type): void
-    {
-        if (!is_array($this->error)) {
-            $this->error = array();
-        }
-
-        array_push($this->error, [
-            'parameter' => $name,
-            'error' => $error,
-            'code' => $code,
-            'type' => $type
-        ]);
-    }
-}
+  // Erro
+  "result" => $errors
+]);
+echo "</pre>";
