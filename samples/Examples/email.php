@@ -33,61 +33,52 @@ declare(strict_types=1);
 ##                                          INICIO CODIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace Serafim\FormValidator\validators;
+use Serafim\FormValidator\Validator;
 
-use DateTime;
-use Serafim\FormValidator\ValidatorInterface;
-use Decimal\Decimal;
+require '../../vendor/autoload.php';
 
-/**
- *
- * @author Nícola Serafim <nicola@seraf.im>
+$form = [
+  // Input 1
+  "input1" => "nicola@seraf.im",
+
+  // Input 2
+  "input2" => "email@example.com",
+
+  // Input 3
+  "input3" => "email@invalid@seraf.im",
+
+  // Input 4 - Not sent
+  //"input4" => "",
+
+  // Input 5
+  "input5" => "invalid",
+];
+
+$validator = new Validator($form);
+
+/*
+ * required: Make field mandatory
+ * #: Desired error code (Must be integer)
  */
-class validatorDecimal implements validatorInterface
-{
-    private $value;
-    private $option = 2;
-    private $error = null;
-    private $code = null;
+$input1 = $validator->rules('input1', 'email');
+$input2 = $validator->rules('input2', 'email');
+$input3 = $validator->rules('input3', 'email');
+$input4 = $validator->rules('input4', 'email');
+$input5 = $validator->rules('input5', 'email');
 
-    public function setValue($value): void
-    {
-        $this->value = $value;
-    }
+// If there are errors, it returns json with the errors, if everything returns null
+$errors = $validator->errors();
 
-    public function setOption(string $option): void
-    {
-        if ($option)
-            $this->option = (int) $option;
-    }
+//See the result
+echo "<pre>";
+var_dump([
+  "input1" => $input1,
+  "input2" => $input2,
+  "input3" => $input3,
+  "input4" => $input4,
+  "input5" => $input5,
 
-    public function setCode(int $code): void
-    {
-        $this->code = $code;
-    }
-
-    public function execute()
-    {
-        if (!is_null($this->value)) {
-            $this->value = (string) $this->value;
-            if (!is_numeric($this->value)) {
-                $this->error = "is not valid";
-                return false;
-            }
-
-            $value = new Decimal($this->value, Decimal::MAX_PRECISION);
-            return $value->toFixed($this->option);
-        }
-        return $this->value;
-    }
-
-    public function error()
-    {
-        return $this->error;
-    }
-
-    public function code()
-    {
-        return $this->code;
-    }
-}
+  // Erro
+  "result" => $errors
+]);
+echo "</pre>";

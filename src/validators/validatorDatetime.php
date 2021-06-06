@@ -67,7 +67,6 @@ class validatorDatetime implements validatorInterface
 
     public function execute()
     {
-        echo $this->option;
         $date = DateTime::createFromFormat($this->option, $this->value);
         if ($date && $date->format($this->option) === $this->value)
             return $date->format("Y-m-d H:i:s");
