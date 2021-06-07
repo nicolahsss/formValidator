@@ -1,179 +1,185 @@
-# PNHS Form-validator [![Build Status](https://travis-ci.org/nicolahsss/form-validator.png)](https://travis-ci.org/nicolahsss/form-validator)
+# Form Validator [![Build Status](https://travis-ci.com/seraf-im/formValidator.svg?branch=master)](https://travis-ci.com/seraf-im/formValidator)
 
-O Form Validator é uma biblioteca de código aberto para validação de dados recebidos de usuários por formulários ou outros meios. O foco é ser simples e ter uma arquitetura compatível com os recursos mais modernos do PHP.
+<p align = "center">
+  <span> English </span> |
+  <a href="https://github.com/seraf-im/formValidator/blob/main/lang/README.md#form-validator-"> Portuguese </a>
+</p>
 
-## Ajude o Projeto a continuar, faça uma doação!
+Form Validator is an open source library for validating data received from users by forms or other means. The focus is to be simple and have an architecture compatible with the latest features of PHP.
+
+We provide an example using "Form URL Encoded" (submission via simple HTML form) and a JSON example (submission via VUE-JS), we suggest you test both examples by doing <b>Installation for testing</b>, logo bellow
+
+## Help the Project to continue, donate a coffee!
 
 [![Pague com PagSeguro - é rápido, grátis e seguro!](https://stc.pagseguro.uol.com.br/public/img/botoes/doacoes/209x48-doar-assina.gif)](https://pag.ae/7VUx6v4sL)
+or pix for brazilians: c6@seraf.im
 
-## Instalação
+## Installation for testing
+
+To test before including it in your project, open the terminal, prompt or powershell and run the commands below:
+
+```
+git clone https://github.com/seraf-im/formValidator.git
+cd formValidator
+composer install --no-dev
+cd samples
+php -S localhost:8000
+```
+
+Remembering that it is necessary that you have previously installed PHP and GIT.
+
+## Installation in your project
 
 ### Composer
 
-Se você já conhece o **Composer** (o que é extremamente recomendado), simplesmente abra o terminal, prompt ou powershell na pasta de seu projeto e digite:
+If you already know **Composer** (which is highly recommended), simply open the terminal, prompt or powershell in your project folder and type:
 
 ```
-composer require pnhs/form-validator:"dev-master"
-cd form_validator
-composer install --no-dev
-cd samples
-php -S localhost:8888
+composer require pnhs/form_validator
 ```
 
-## Como usar
+## How to use
 
-Essa é a melhor parte. Não poderia ser mais simples, veja um exemplo básico:
+That's the best part. It couldn't be simpler, see a basic example:
 
 ```php
-use PNHS\Validator\Validator;
+use Pnhs\FormValidator\Validator;
 
 $form = [
     "username" => "nicolahsss",
-    "password" => "senhasenha"
+    "password" => "password26"
 ];
 
 $validator = new Validator($form);
 
 /*
- * required: obrigatório
- * min: quantidade mínima de caracteres
- * max: quantidade máxima de caracteres
+ * required: Is required
+ * no_empty: Cannot be sent blank
+ * min_len: Minimum number of characters
+ * max_len: Maximum number of characters
  */
-$username = $validator->rules('username', 'required|min:3|max:10');
-$password = $validator->rules('password', 'required|min:8');
+$username = $validator->rules('username', 'required|no_empty|min_len:3|max_len:10');
+$password = $validator->rules('password', 'required|no_empty|min_len:8');
 
-//Se houver erros, retorna json com os erros, caso esteja tudo retorna null
+//If there are errors, it returns json with the errors, if everything is fine, it returns NULL
 $errors = $validator->errors();
 
-//Veja o resultado
-var_dump($username, $password, $errors);
+//See the result
+var_dump($username, $password, $errors ?? "OK");
 ```
 
-Sim, só isso! Basta utilizar as regras de acordo com sua necessidade, se desejar você pode contribuir com o projeto adicionando novas regras.
-Na pasta **samples** possui alguns exemplos de uso.
+**Yes, just that!** Just use the rules according to your need, if you wish you can contribute to the project by adding new rules.
+In the **samples** folder there are examples of using all the rules.
 
-## Regras suportados
+## Supported Rules
 
-Atualmente o PNHS Form Validator funciona com as seguintes regras:
-As regras que estão <strike>riscados</strike> são as que ainda não foram implementadas.
-Você pode usar o # (hashtag) após a regra para informar o codigo de erro desejado.
-
-```
-$validator->rules('username', 'required#2012|min:3#2045|max:10');
-//Neste exemplo, caso o valor não seja informado será retornado o codigo de erro 2012 e caso a quantidade de caracteres seja menor que 3 caracteres será retornado o erro 2045.
-```
+Currently the Form Validator works with the following rules, remember you can always add more:
 
 <table>
   <tr>
-    <th>Regra</th>
-    <th>Descrição</th>
-    <th>Código de erro</th>
-  </tr>
-  <tr>
-    <td><b>required</b></td>
-    <td>Dado obrigatório</td>
-    <td><b>3001</b> * is required</td>
-  </tr>
-  <tr>
-    <td><b>min:x</b></td>
-    <td>Quantidade minima de caracteres</td>
-    <td><b>3002</b> * must contain at least * characters</td>
-  </tr>
-  <tr>
-    <td colspan="3">
-        Altere <b>x</b> pela quantidade minima de caracteres desejado
-    </td>
-  </tr>
-  <tr>
-    <td><b>max:x</b></td>
-    <td>Quantidade maxima de caracteres</td>
-    <td><b>3003</b> must contain a maximum * characters</td>
-  </tr>
-  <tr>
-    <td colspan="3">
-        Altere <b>x</b> pela quantidade maxima de caracteres desejado
-    </td>
-  </tr>
-  <tr>
-    <td><b>exact</b></td>
-    <td>Quantidade exata de caracteres</td>
-    <td><b>3004</b> must contain exactly * characters</td>
-  </tr>
-  <tr>
-    <td><b>email</b></td>
-    <td>Validar Email</td>
-    <td><b>3005</b> is not valid</td>
+    <th>Rule</th>
+    <th>Information</th>
+    <th>Details</th>
   </tr>
   <tr>
     <td><b>array</b></td>
-    <td>Validar Array</td>
-    <td><b>3006</b> is not valid</td>
+    <td></td>
+    <td></td>
   </tr>
   <tr>
-    <td rowspan="9"><b>password:x</b></td>
-    <td rowspan="9">Validar Email</td>
-    <td>
-      <strike>3007 the password cannot contain repeated characters</strike>
-    </td>
+    <td><b>date</b></td>
+    <td>Y-m-d standard date format</td>
+    <td>If your date has another pattern for example d/m/Y, just use this way <b>"date:d/m/Y"</b>. The return always follows the Y-m-d pattern</td>
+  </tr>
+    <tr>
+    <td><b>datetime</b></td>
+    <td>Y-m-d H:i:s standard date format</td>
+    <td>If your date has another pattern for example d/m/Y H:i:s, just use this way <b>"date:d/m/Y H:i:s"</b>. The return always follows the pattern Y-m-d H:i:s</td>
   </tr>
   <tr>
-    <td><strike>3008 you cannot use this password</strike></td>
+    <td><b>decimal</b></td>
+    <td>2 standard decimal places</td>
+    <td>If you want to use a number of decimal places other than 2, use <b> "decimal: x" </b>, changing <b> x </b> to the desired number of decimal places.</td>
   </tr>
   <tr>
-    <td><b>3009</b> must contain uppercase characters</td>
+    <td><b>email</b></td>
+    <td></td>
+    <td></td>
   </tr>
   <tr>
-    <td><b>3010</b> must contain lowercase characters</td>
+    <td><b>exact:x</b></td>
+    <td></td>
+    <td>To define the number of characters, change the <b>x</b> to the desired amount</td>
   </tr>
   <tr>
-    <td><b>3011</b> must contain uppercase characters and numbers</td>
+    <td><b>integer</b></td>
+    <td></td>
+    <td></td>
   </tr>
   <tr>
-    <td><b>3012</b> must contain numbers</td>
+    <td><b>max_len:x</b></td>
+    <td></td>
+    <td></td>
   </tr>
   <tr>
-    <td><strike>3013 * must contain special characters</strike></td>
-  </tr>
-  <tr>
-    <td><strike>3014 * must contain special characters and numbers</strike></td>
-  </tr>
-  <tr>
-    <td><strike>3015 * must contain special characters and uppercase characters</strike></td>
-  </tr>
-  <tr>
-    <td colspan="3">
-        Altere <b>x</b> por umas destas opçoes<br />
-        <strike>0 para verificação basica 3007 e 3008</strike><br />
-        <b>1</b> para exigir letras maisculas<br />
-        <b>2</b> para exigir letras maisculas e numeros<br />
-        <strike>3 para exigir letras maisculas, numeros e caracteres especiais</strike>
-    </td>
-  </tr>
-  <tr>
-    <td><b>name</b></td>
-    <td>Validar Nome</td>
-    <td><strike>3016 is not valid</strike></td>
-  </tr>
-  <tr>
-    <td><b>username:x</b></td>
-    <td>Validar Nome de usuário</td>
-    <td><strike>3017 is not valid</strike></td>
+    <td><b>min_len:x</b></td>
+    <td></td>
+    <td></td>
   </tr>
   <tr>
     <td colspan="3">
-        Altere <b>x</b> por umas destas opçoes<br />
-        <strike>0 para permitir apenas letras minusculas</strike><br />
-        <strike>1 para permitir apenas anteriores e numeros</strike><br />
-        <strike>2 para permitir apenas anteriores e underline</strike><br />
-        <strike>3 para permitir apenas anteriores e letras maisculas</strike><br />
+      For <b> min_len </b> and <b> max_len </b>, change <b> x </b> to the desired number of characters
     </td>
+  </tr>
+  <tr>
+    <td><b>no_empty</b></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><b>numeric</b></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><b>required</b></td>
+    <td></td>
+    <td>It can be empty, if you want the field to be required and not empty use both rules</td>
+  </tr>
+  <tr>
+    <td><b>string</b></td>
+    <td></td>
+    <td></td>
   </tr>
 </table>
 
-## Contribuição
+# Custom error code
 
-Toda contribuição é bem vinda. Se você deseja incluir novas regras, fique à vontade para explorar o código, veja como é bastante simples integrar qualquer regra à biblioteca.
+You can use the # (hash) after the rule to enter the custom error code if you wish.
 
-## Licença
+```
+$validator->rules('username', 'required#2012|min:3#9999|max:10');
+//In this example, if the value was not entered, the custom error code "2012" will be returned, if the number of characters is less than 3, the custom error "9999" will be returned.
+```
+
+## Future rules
+
+<ul>
+  <li>username</li>
+  <li>Password policy</li>
+  <li>Document Validation*</li>
+  <li>Phone validation*</li>
+</ul>
+*We are looking for the best way to include these rules as they change by document type, state and country.
+
+## Contribution
+
+Every contribution is welcome. If you want to add new rules, feel free to explore the code, see how simple it is to integrate any rule into the library.
+
+## Translation
+
+Also collaborate by including and correcting translations.
+
+## License
 
 - MIT License
