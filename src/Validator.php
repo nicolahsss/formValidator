@@ -33,7 +33,7 @@ declare(strict_types=1);
 ##                                          INICIO CÓDIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace PnhsFormValidator;
+namespace Pnhs\FormValidator;
 
 /**
  *

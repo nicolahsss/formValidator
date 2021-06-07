@@ -33,9 +33,9 @@ declare(strict_types=1);
 ##                                          INICIO CÓDIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace PnhsFormValidator\validators;
+namespace Pnhs\FormValidator\validators;
 
-use PnhsFormValidator\ValidatorInterface;
+use Pnhs\FormValidator\ValidatorInterface;
 
 /**
  *

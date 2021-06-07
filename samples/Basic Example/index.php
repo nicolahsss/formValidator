@@ -33,7 +33,7 @@ declare(strict_types=1);
 ##                                          INICIO CÓDIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-use PnhsFormValidator\Validator;
+use Pnhs\FormValidator\Validator;
 
 require '../../vendor/autoload.php';
 

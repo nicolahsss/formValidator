@@ -33,7 +33,7 @@ declare(strict_types=1);
 ##                                          INICIO CÓDIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace PnhsFormValidator;
+namespace Pnhs\FormValidator;
 
 use Exception;
 
@@ -45,7 +45,7 @@ class ValidatorFactory
 {
     public static function build($type)
     {
-        $className = '\\PnhsFormValidator\validators\validator' . ucfirst($type);
+        $className = '\\Pnhs\FormValidator\validators\validator' . ucfirst($type);
         if (class_exists($className)) :
             return new $className();
         else :
