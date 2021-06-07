@@ -2,7 +2,7 @@
 
 <p align = "center">
   <span> English </span> |
-  <a href="https://github.com/seraf-im/formValidator/blob/main/lang/README.md#form-validator-"> Portuguese </a>
+  <a href="https://github.com/seraf-im/formValidator/tree/master/lang/portuguese#readme"> Portuguese </a>
 </p>
 
 Form Validator is an open source library for validating data received from users by forms or other means. The focus is to be simple and have an architecture compatible with the latest features of PHP.
