@@ -35,29 +35,28 @@ declare(strict_types=1);
 
 namespace Pnhs\FormValidator\validators;
 
-use DateTime;
 use Pnhs\FormValidator\ValidatorInterface;
 
 /**
  *
  * @author Nícola Serafim <nicola@seraf.im>
  */
-class validatorDate implements validatorInterface
+class validatorDocument implements validatorInterface
 {
+
     private $value;
-    private $option = "Y-m-d";
+    private $option;
     private $error = null;
     private $code = null;
 
     public function setValue($value): void
     {
-        $this->value = $value;
+        $this->value = (string) $value;
     }
 
     public function setOption(string $option): void
     {
-        if ($option)
-            $this->option = $option;
+        $this->option = $option;
     }
 
     public function setCode(int $code): void
@@ -67,14 +66,14 @@ class validatorDate implements validatorInterface
 
     public function execute()
     {
-        if (isset($this->value)) {
-            $date = DateTime::createFromFormat($this->option, $this->value);
-            if ($date && $date->format($this->option) === $this->value)
-                return $date->format("Y-m-d");
-            $this->error = "is not date valid";
+        $options = explode(",", $this->option);
+
+        if ((float)$this->value > (float)$this->option) {
+            $this->error = "number cannot be greater than {$this->option}";
             return false;
         }
-        return true;
+
+        return (float) $this->value;
     }
 
     public function error()
