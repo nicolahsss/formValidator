@@ -59,7 +59,7 @@ class validatorMax_len implements validatorInterface
         $this->option = $option;
     }
 
-    public function setCode(int $code): void
+    public function setCode(string $code): void
     {
         $this->code = $code;
     }

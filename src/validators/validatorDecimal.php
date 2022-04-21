@@ -61,7 +61,7 @@ class validatorDecimal implements validatorInterface
             $this->option = (int) $option;
     }
 
-    public function setCode(int $code): void
+    public function setCode(string $code): void
     {
         $this->code = $code;
     }
