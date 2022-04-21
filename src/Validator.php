@@ -75,7 +75,7 @@ class Validator
             $model = ValidatorFactory::build($validator);
             $model->setValue($data);
             $model->setOption($option);
-            $model->setCode((int) $code);
+            $model->setCode((string) $code);
 
             $result = $model->execute();
 

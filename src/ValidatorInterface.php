@@ -43,7 +43,7 @@ interface ValidatorInterface
 {
     public function setValue(string $value): void;
     public function setOption(string $option): void;
-    public function setCode(int $code): void;
+    public function setCode(string $code): void;
     public function execute();
     public function error();
 }
