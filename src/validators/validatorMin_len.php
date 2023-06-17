@@ -66,6 +66,9 @@ class validatorMin_len implements validatorInterface
 
     public function execute()
     {
+        if (empty($this->value))
+            return null;
+
         if ((!empty($this->value)) && (strlen($this->value) < $this->option)) {
             $this->error = "must contain at least {$this->option} characters";
             return false;

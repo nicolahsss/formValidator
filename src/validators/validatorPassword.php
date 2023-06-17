@@ -66,6 +66,11 @@ class validatorPassword implements validatorInterface
 
     public function execute()
     {
+        if (empty($this->value))
+            return null;
+
+        return $this->value;
+
         $pattern = match ((int)$this->option) {
             //0-9,a-z ou A-Z
             1 => '/^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z$*&@#]{8,100}$/',

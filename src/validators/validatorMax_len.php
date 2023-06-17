@@ -70,7 +70,7 @@ class validatorMax_len implements validatorInterface
             $this->error = "must contain a maximum {$this->option} characters";
             return false;
         }
-        return $this->value;
+        return empty($this->value) ? NULL : $this->value;
     }
 
     public function error()

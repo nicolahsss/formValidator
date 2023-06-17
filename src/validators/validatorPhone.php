@@ -37,12 +37,13 @@ namespace Pnhs\FormValidator\validators;
 
 use DateTime;
 use Pnhs\FormValidator\ValidatorInterface;
+use Pnhs\FormValidator\validators\Phone\BRA;
 
 /**
  *
  * @author Nícola Serafim <nicola@seraf.im>
  */
-class validatorEmail implements validatorInterface
+class validatorPhone implements validatorInterface
 {
     private $value;
     private $option;
@@ -66,11 +67,27 @@ class validatorEmail implements validatorInterface
 
     public function execute()
     {
-        if (!empty($this->value) && !filter_var($this->value, FILTER_VALIDATE_EMAIL)) {
+        if (empty($this->value))
+            return null;
+
+        $options = explode(',', $this->option);
+
+        $length = strlen($this->value);
+
+        $c = 'Pnhs\FormValidator\validators\Phone\\' . $options[0];
+
+        $class = new $c();
+        $r = $class->run($this->value, $length);
+
+        if (!$r) {
             $this->error = "is not valid";
             return false;
         }
-        return filter_var($this->value, FILTER_SANITIZE_EMAIL);
+
+        if (isset($options[1]) && $options[1] == "true")
+            return array_merge(['number' => $this->value], $r);
+        else
+            return $this->value;
     }
 
     public function error()

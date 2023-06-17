@@ -70,7 +70,7 @@ class validatorInteger implements validatorInterface
             $this->error = "is not valid";
             return false;
         }
-        return $this->value;
+        return (string) $this->value;
     }
 
     public function error()

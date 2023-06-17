@@ -33,53 +33,66 @@ declare(strict_types=1);
 ##                                          INICIO CÓDIGO DE FONTE!                                          ##
 ###############################################################################################################
 
-namespace Pnhs\FormValidator\validators;
-
-use DateTime;
-use Pnhs\FormValidator\ValidatorInterface;
+namespace Pnhs\FormValidator\validators\Phone;
 
 /**
  *
  * @author Nícola Serafim <nicola@seraf.im>
  */
-class validatorEmail implements validatorInterface
+class BR
 {
-    private $value;
-    private $option;
-    private $error = null;
-    private $code = null;
-
-    public function setValue($value): void
-    {
-        $this->value = $value;
+  public function run(string $number, int $length)
+  {
+    if ($length == 11 && $number[2] == 9) {
+      return [
+        'formatted' => '(' . substr($number, 0, 2) . ') ' . substr($number, 2, 1) . ' ' . substr($number, 3, 4) . ' - ' . substr($number, 7, 4),
+        'type'      => 'cellphone'
+      ];
+    } elseif ($length == 10 && ($number[2] == 2 | $number[2] == 3)) {
+      return [
+        'formatted' => '(' . substr($number, 0, 2) . ') ' . substr($number, 2, 4) . ' - ' . substr($number, 6, 4),
+        'type'      => 'landline'
+      ];
+    } elseif ($length == 11 && substr($number, 0, 4) == '0300') {
+      return [
+        'formatted' => $this->formatted0800($number),
+        'type'      => '0300'
+      ];
+    } elseif ($length == 8 && substr($number, 0, 4) == '4003') {
+      return [
+        'formatted' => $this->formatted4003($number),
+        'type'      => '4003'
+      ];
+    } elseif ($length == 8 && substr($number, 0, 4) == '4004') {
+      return [
+        'formatted' => $this->formatted4003($number),
+        'type'      => '4004'
+      ];
+    } elseif ($length == 11 && substr($number, 0, 4) == '0500') {
+      return [
+        'formatted' => $this->formatted0800($number),
+        'type'      => '0500'
+      ];
+    } elseif ($length == 11 && substr($number, 0, 4) == '0800') {
+      return [
+        'formatted' => $this->formatted0800($number),
+        'type'      => '0800'
+      ];
+    } elseif ($length == 11 && substr($number, 0, 4) == '0900') {
+      return [
+        'formatted' => $this->formatted0800($number),
+        'type'      => '0900'
+      ];
     }
+  }
 
-    public function setOption(string $option): void
-    {
-        $this->option = $option;
-    }
+  private function formatted0800($number)
+  {
+    return substr($number, 0, 4) . ' ' . substr($number, 4, 3) . ' ' . substr($number, 7, 4);
+  }
 
-    public function setCode(string $code): void
-    {
-        $this->code = $code;
-    }
-
-    public function execute()
-    {
-        if (!empty($this->value) && !filter_var($this->value, FILTER_VALIDATE_EMAIL)) {
-            $this->error = "is not valid";
-            return false;
-        }
-        return filter_var($this->value, FILTER_SANITIZE_EMAIL);
-    }
-
-    public function error()
-    {
-        return $this->error;
-    }
-
-    public function code()
-    {
-        return $this->code;
-    }
+  private function formatted4003($number)
+  {
+    return substr($number, 0, 4) . ' ' . substr($number, 4, 4);
+  }
 }

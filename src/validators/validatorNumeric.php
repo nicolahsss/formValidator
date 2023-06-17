@@ -70,7 +70,7 @@ class validatorNumeric implements validatorInterface
             $this->error = "is not valid";
             return false;
         }
-        return $this->value;
+        return empty($this->value) ? NULL : $this->value;
     }
 
     public function error()

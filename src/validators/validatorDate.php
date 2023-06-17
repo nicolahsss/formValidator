@@ -74,7 +74,7 @@ class validatorDate implements validatorInterface
             $this->error = "is not date valid";
             return false;
         }
-        return true;
+        return null;
     }
 
     public function error()

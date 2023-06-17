@@ -67,11 +67,11 @@ class validatorExact implements validatorInterface
 
     public function execute()
     {
-        if ((!empty($this->value)) && (strlen($this->value) != $this->option)) {
+        if (!(is_null($this->value) || empty($this->value)) && strlen($this->value) != $this->option) {
             $this->error = "must contain exactly {$this->option} characters";
             return false;
         }
-        return $this->value;
+        return empty($this->value) ? NULL : (string) $this->value;
     }
 
     public function error()

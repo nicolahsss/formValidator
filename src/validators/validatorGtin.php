@@ -35,23 +35,22 @@ declare(strict_types=1);
 
 namespace Pnhs\FormValidator\validators;
 
-use DateTime;
 use Pnhs\FormValidator\ValidatorInterface;
 
 /**
  *
  * @author Nícola Serafim <nicola@seraf.im>
  */
-class validatorEmail implements validatorInterface
+class validatorGtin implements ValidatorInterface
 {
     private $value;
     private $option;
     private $error = null;
     private $code = null;
 
-    public function setValue($value): void
+    public function setValue(null|string|int $value): void
     {
-        $this->value = $value;
+        $this->value = (string) $value;
     }
 
     public function setOption(string $option): void
@@ -66,11 +65,33 @@ class validatorEmail implements validatorInterface
 
     public function execute()
     {
-        if (!empty($this->value) && !filter_var($this->value, FILTER_VALIDATE_EMAIL)) {
-            $this->error = "is not valid";
+        if (in_array(strlen($this->value), [8, 12, 13, 14])) {
+            $i = strlen($this->value) - 2;
+            $c = 3;
+            $sum = 0;
+
+            while ($i >= 0) {
+                $sum = $sum + ($this->value[$i] * $c);
+                $c = ($c == 1 ? 3 : 1);
+                $i--;
+            }
+
+            $result_sum_div_10 = floor($sum / 10);
+            $result_mult_10 = ($result_sum_div_10 + 1) * 10;
+            $result_check = $result_mult_10 - $sum;
+            $value_check = $this->value[strlen($this->value) - 1];
+
+            if ($value_check == $result_check)
+                return $this->value;
+            else {
+                $this->error = "it's not a valid gtin";
+                return false;
+            }
+        } elseif (strlen($this->value) == 0) {
+        } else {
+            $this->error = "must contain 8, 12, 13 or 14 digits";
             return false;
         }
-        return filter_var($this->value, FILTER_SANITIZE_EMAIL);
     }
 
     public function error()

@@ -68,7 +68,7 @@ class validatorDecimal implements validatorInterface
 
     public function execute()
     {
-        if (!is_null($this->value)) {
+        if (!is_null($this->value) && $this->value !== "") {
             $this->value = (string) $this->value;
             if (!is_numeric($this->value)) {
                 $this->error = "is not valid";
@@ -78,7 +78,7 @@ class validatorDecimal implements validatorInterface
             $value = new Decimal($this->value, Decimal::MAX_PRECISION);
             return $value->toFixed($this->option);
         }
-        return $this->value;
+        return empty($this->value) ? NULL : $this->value;
     }
 
     public function error()

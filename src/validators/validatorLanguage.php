@@ -42,7 +42,7 @@ use Pnhs\FormValidator\ValidatorInterface;
  *
  * @author Nícola Serafim <nicola@seraf.im>
  */
-class validatorEmail implements validatorInterface
+class validatorLanguage implements validatorInterface
 {
     private $value;
     private $option;
@@ -66,11 +66,10 @@ class validatorEmail implements validatorInterface
 
     public function execute()
     {
-        if (!empty($this->value) && !filter_var($this->value, FILTER_VALIDATE_EMAIL)) {
-            $this->error = "is not valid";
-            return false;
-        }
-        return filter_var($this->value, FILTER_SANITIZE_EMAIL);
+        if (empty($this->value) || gettype($this->value) === "string")
+            return $this->value;
+        $this->error = "is not valid";
+        return false;
     }
 
     public function error()
