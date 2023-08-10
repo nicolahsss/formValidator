@@ -56,7 +56,7 @@ class validatorBoolean implements validatorInterface
 
     public function setOption(string $option): void
     {
-        $this->option = (int) $option;
+        $this->option = $option;
     }
 
     public function setCode(string $code): void
@@ -66,14 +66,11 @@ class validatorBoolean implements validatorInterface
 
     public function execute()
     {
-        if ($this->value === null)
-            return (string) $this->option;
-
         if (NULL === filter_var($this->value, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE)) {
             $this->error = "no is boolean";
             return false;
         }
-        return (string) $this->value;
+        return (int) $this->value;
     }
 
     public function error()
