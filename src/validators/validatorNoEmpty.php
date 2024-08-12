@@ -41,7 +41,7 @@ use Pnhs\FormValidator\ValidatorInterface;
  *
  * @author Nícola Serafim <nicola@seraf.im>
  */
-class validatorNo_empty implements ValidatorInterface
+class ValidatorNoEmpty implements ValidatorInterface
 {
     private $value;
     private $option;
@@ -63,21 +63,21 @@ class validatorNo_empty implements ValidatorInterface
         $this->code = $code;
     }
 
-    public function execute()
+    public function execute(): mixed
     {
-        if ((!is_null($this->value) || isset($this->value)) && empty($this->value)) {
+        if ((!is_null($this->value) || isset($this->value)) && empty($this->value) && !is_bool($this->value)) {
             $this->error = "is empty";
-            return false;
+            return "_false";
         }
         return $this->value;
     }
 
-    public function error()
+    public function error(): string|null
     {
         return $this->error;
     }
 
-    public function code()
+    public function code(): string|null
     {
         return $this->code;
     }

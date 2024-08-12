@@ -41,9 +41,8 @@ use Pnhs\FormValidator\ValidatorInterface;
  *
  * @author Nícola Serafim <nicola@seraf.im>
  */
-class validatorBoolean implements validatorInterface
+class ValidatorBoolean implements validatorInterface
 {
-
     private $value;
     private $option;
     private $error = null;
@@ -66,11 +65,14 @@ class validatorBoolean implements validatorInterface
 
     public function execute()
     {
-        if (NULL === filter_var($this->value, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE)) {
+        if (null === filter_var($this->value, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE)) {
             $this->error = "no is boolean";
             return false;
         }
-        return (int) $this->value;
+        if (!is_null($this->value) && is_bool($this->value)) {
+            return (int) $this->value;
+        }
+        return $this->value;
     }
 
     public function error()

@@ -41,11 +41,10 @@ namespace Pnhs\FormValidator;
  */
 class Validator
 {
-
     private $error;
     private $data;
 
-    function __construct($data)
+    public function __construct($data)
     {
         $this->data = $data;
     }
@@ -79,7 +78,7 @@ class Validator
 
             $result = $model->execute();
 
-            if ($result === false) {
+            if ($result === "_false") {
                 $this->setError($name, $name . ' ' . $model->error(), $model->code(), $validator);
                 return null;
             }

@@ -41,7 +41,7 @@ use Pnhs\FormValidator\ValidatorInterface;
  *
  * @author nicolahsss
  */
-class validatorRequired implements ValidatorInterface
+class ValidatorRequired implements ValidatorInterface
 {
     private $value;
     private $option;
@@ -63,21 +63,24 @@ class validatorRequired implements ValidatorInterface
         $this->code = $code;
     }
 
-    public function execute()
+    public function execute(): mixed
     {
-        if ((!isset($this->value)) && (gettype($this->value) !== "boolean")) {
+        if (
+            !isset($this->value)
+            && !is_bool($this->value)
+        ) {
             $this->error = "is required";
-            return false;
+            return "_false";
         }
         return $this->value;
     }
 
-    public function error()
+    public function error(): null|string
     {
         return $this->error;
     }
 
-    public function code()
+    public function code(): null|string
     {
         return $this->code;
     }
