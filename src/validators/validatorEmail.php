@@ -42,7 +42,7 @@ use Pnhs\FormValidator\ValidatorInterface;
  *
  * @author Nícola Serafim <nicola@seraf.im>
  */
-class validatorEmail implements validatorInterface
+class ValidatorEmail implements validatorInterface
 {
     private $value;
     private $option;

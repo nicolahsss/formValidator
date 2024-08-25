@@ -35,16 +35,14 @@ declare(strict_types=1);
 
 namespace Pnhs\FormValidator\validators;
 
-use DateTime;
 use Pnhs\FormValidator\ValidatorInterface;
 
 /**
  *
  * @author Nícola Serafim <nicola@seraf.im>
  */
-class validatorExact implements validatorInterface
+class ValidatorExact implements validatorInterface
 {
-
     private $value;
     private $option;
     private $error = null;
@@ -67,11 +65,22 @@ class validatorExact implements validatorInterface
 
     public function execute()
     {
-        if (!(is_null($this->value) || empty($this->value)) && strlen($this->value) != $this->option) {
+        if (
+            !(is_null($this->value)
+            || empty($this->value))
+            && strlen($this->value) != $this->option
+        ) {
             $this->error = "must contain exactly {$this->option} characters";
-            return false;
+            return "_false";
         }
-        return empty($this->value) ? NULL : (string) $this->value;
+        return empty($this->value) ? null : $this->value;
+
+
+        // if ((!is_null($this->value) || isset($this->value)) && empty($this->value) && !is_bool($this->value)) {
+        //     $this->error = "is empty";
+        //     return "_false";
+        // }
+        // return $this->value;
     }
 
     public function error()
